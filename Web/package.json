@@ -30,7 +30,6 @@
         "connected-react-router": "^6.8.0",
         "dotenv": "^8.2.0",
         "font-awesome": "^4.7.0",
-        "mdbreact": "^4.25.4",
         "moment": "^2.24.0",
         "react": "^16.12.0",
         "react-animated-css": "^1.2.1",
@@ -55,23 +54,8 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
-    "eslintConfig": {
-        "extends": "react-app"
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    },
     "main": "index.js",
-    "author": "Stefan van de Laarschot <s.vandelaarschot@outlook.com>",
+    "author": "Stefan van de Laarschot <s.vandelaarschot@gmail.com>",
     "license": "MIT",
     "devDependencies": {
         "@types/bootstrap": "^4.3.1",
