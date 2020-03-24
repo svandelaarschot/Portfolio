@@ -1,0 +1,44 @@
+[{
+        "Id": 1,
+        "Name": "Home",
+        "Icon": "home",
+        "Url": "/Home",
+        "Position": "none"
+    },
+    {
+        "Id": 2,
+        "Name": "About",
+        "Icon": "id-card",
+        "Url": "/AboutMe",
+        "Position": "none"
+    },
+    {
+        "Id": 3,
+        "Name": "Skills",
+        "Direction": "",
+        "Icon": "laptop-code",
+        "Url": "/Skills",
+        "Position": "none"
+    },
+    {
+        "Id": 4,
+        "Name": "Project(s)",
+        "Icon": "award",
+        "Url": "/Projects",
+        "Position": "none"
+    },
+    {
+        "Id": 5,
+        "Name": "Contact",
+        "Icon": "phone-square-alt",
+        "Url": "/Contact",
+        "Position": "none"
+    },
+    {
+        "Id": 6,
+        "Name": "Login",
+        "Icon": "key",
+        "Url": "/Backend/Login",
+        "Position": "none"
+    }
+]
