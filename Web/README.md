@@ -3,11 +3,10 @@
 - Learning project to learn ReactJS Framework.
 
 # VSCode Extensions:
-- githistory
-- vscode-firefox-debug
-- vscode-typescript-tslint-plugin
 - debugger-for-chrome
 - debugger-for-firefox
-- codesandbox-black
+- vscode-typescript-tslint-plugin
 - code-spell-checker
+- codesandbox-black
+- githistory
 - vscode-icons
