@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import React from "react";
 import { BaseControlProps, ColorType, getColorType } from "./BaseControlProps";
 
@@ -9,19 +9,21 @@ interface ButtonProps extends BaseControlProps {
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-export const Button = (props: ButtonProps) => {
-  const CustomButton = styled.button`
-    font-weight: ${props.isBold ? "bold" : "normal"};
-  `;
+const CustomButton = styled.button`
+  font-weight: ${props => (props.theme.isBold ? "bold" : "normal")};
+`;
 
+export const Button = (props: ButtonProps) => {
   return (
-    <CustomButton
-      onClick={props.onClick}
-      type={props.type}
-      className={`form-control btn ${getColorType(props)}`}
-    >
-      {props.buttonText}
-    </CustomButton>
+    <ThemeProvider theme={props}>
+      <CustomButton
+        onClick={props.onClick}
+        type={props.type}
+        className={`form-control btn ${getColorType(props)}`}
+      >
+        {props.buttonText}
+      </CustomButton>
+    </ThemeProvider>
   );
 };
 

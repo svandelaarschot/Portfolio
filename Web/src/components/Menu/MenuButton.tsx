@@ -18,17 +18,17 @@ export interface MenuButtonItem {
   isActive?: boolean;
 }
 
+const ButtonText = styled.span`
+  margin-left: 5px;
+  margin-right: 5px;
+`;
+
 export const MenuButton = (props: MenuButtonItem) => {
   const onClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     if (props.onClick) {
       props.onClick!(event, props);
     }
   };
-
-  const ButtonText = styled.span`
-    margin-left: 5px;
-    margin-right: 5px;
-  `;
 
   return (
     <ThemeProvider theme={props}>
