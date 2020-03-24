@@ -3,12 +3,11 @@ import { Theme } from "../../Enums/Theme";
 import FrontendMenu from "./Data/FrontendMenu.json";
 import BackendMenu from "./Data/BackendMenu.json";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "mobx";
 import { MenuButton, MenuButtonItem } from "./MenuButton";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import HeaderContext from "../Header/HeaderContext";
-import Paths from "src/Utils/Paths";
+import { Paths } from "src/Utils/Paths";
 
 export enum MenuType {
   Frontend = "Frontend",

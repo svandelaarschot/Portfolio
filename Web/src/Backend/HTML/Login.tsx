@@ -9,8 +9,8 @@ import { ColorType } from "src/components/controls/BaseControlProps";
 import { ToastMessage } from "src/components/controls/Toast";
 import { useEffect } from "react";
 import { useHistory, withRouter } from "react-router-dom";
-import Paths from "src/Utils/Paths";
 import { setAuthentication } from "src/Utils/Authentication";
+import { Paths } from "src/Utils/Paths";
 
 /* Always put styled-components outside the class or functional components !!! */
 const LoginContainer = styled.div`

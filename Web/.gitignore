@@ -1,0 +1,16 @@
+/API/.vs/API/v16/Server/sqlite3/db.lock
+*.ide
+node_modules
+appsettings.Development.json
+
+applicationhost.config
+/API/.vs/API/DesignTimeBuild/*.gitignore
+/API/obj/API.csproj.nuget.dgspec.json
+/API/obj/API.csproj.nuget.g.props
+/API/obj/API.csproj.nuget.g.targets
+/API/obj/Debug/netcoreapp3.1/API.AssemblyInfo.cs
+/API/obj/Debug/netcoreapp3.1/API.csproj.CopyComplete
+/API/obj/Debug/netcoreapp3.1/API.csproj.FileListAbsolute.txt
+/API/obj/Debug/netcoreapp3.1/project.razor.json
+/API/obj/Debug/netcoreapp3.1/staticwebassets/API.StaticWebAssets.xml
+/API/obj/project.assets.json

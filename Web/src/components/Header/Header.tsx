@@ -9,7 +9,7 @@ import { GetIconFontAwesomeByName } from "../../Utils/Utils";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HeaderContext from "../Header/HeaderContext";
 import { withRouter, RouteComponentProps } from "react-router-dom";
-import Paths from "src/Utils/Paths";
+import { Paths } from "src/Utils/Paths";
 
 interface HeaderProps {}
 

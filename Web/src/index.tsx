@@ -8,12 +8,12 @@ import { Home } from "./HTML/Pages/Home";
 import HTMLWebPage from "./HTML/Components/HTMLWebPage";
 import { Contact } from "./HTML/Pages/Contact";
 import CPanel from "./Backend/HTML/CPanel";
-import Paths from "./Utils/Paths";
 import { HeaderProvider } from "./components/Header/HeaderContext";
 import Header from "./components/Header/Header";
 import Menu, { MenuType } from "./components/Menu/Menu";
 import { Theme } from "./Enums/Theme";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Paths } from "./Utils/Paths";
 
 /*
 React Routing: https://reacttraining.com/react-router/web/guides/philosophy

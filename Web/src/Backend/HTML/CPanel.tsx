@@ -12,9 +12,9 @@ import {
 } from "react-router-dom";
 import { Dashboard } from "./Dashboard";
 import { Webpages } from "./Webpages";
-import Paths from "src/Utils/Paths";
 import { ToastMessage } from "src/components/controls/Toast";
 import { setAuthentication, getAuthentication } from "src/Utils/Authentication";
+import { Paths } from "src/Utils/Paths";
 
 interface CPanelProps extends RouteComponentProps<any> {}
 
