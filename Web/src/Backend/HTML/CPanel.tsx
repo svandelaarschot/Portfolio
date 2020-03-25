@@ -15,8 +15,18 @@ import { Webpages } from "./Webpages";
 import { ToastMessage } from "src/components/controls/Toast";
 import { setAuthentication, getAuthentication } from "src/Utils/Authentication";
 import { Paths } from "src/Utils/Paths";
+import { connect } from "react-redux";
+import { IAppState } from "src/Redux/Store/Store";
+import { ThunkDispatch } from "redux-thunk";
+import { AnyAction } from "@reduxjs/toolkit";
+import { updateHeaderCreator } from "src/Redux/Actions/ActionCreators";
+import { HeaderActions } from "src/Redux/Reducers/HeaderReducer";
+import { HeaderItem } from "src/components/Header/HeaderItem";
 
-interface CPanelProps extends RouteComponentProps<any> {}
+interface CPanelProps extends RouteComponentProps<any> {
+  headerItem: HeaderItem;
+  updateHeader: (title: string, icon: string) => Promise<HeaderActions>;
+}
 
 const CSS = createGlobalStyle`
 .container-fluid,
@@ -38,6 +48,7 @@ const CPanel = (props: CPanelProps) => {
   const [isAuth, setIsAuth] = useState(getAuthentication());
 
   useEffect(() => {
+    props.updateHeader("CPanel", "users-cog");
     if (!isAuth) {
       props.history.push(Paths.LOGIN);
     }
@@ -84,4 +95,17 @@ const CPanel = (props: CPanelProps) => {
   );
 };
 
-export default withRouter(CPanel);
+const mapStateToProps = (store: IAppState) => {
+  return {
+    headerItem: store.HeaderState.headerItem,
+  };
+};
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
+  return {
+    updateHeader: (title: string, icon: string) => dispatch(updateHeaderCreator(title, icon)),
+  }
+};
+
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CPanel));

@@ -11,8 +11,12 @@ import {
   APIError,
   InitialError,
 } from '../Reducers/WebPageReducer';
+import { UpdateHeaderAction, GetHeaderAction } from '../Reducers/HeaderReducer';
+import { HeaderItem } from 'src/components/Header/HeaderItem';
 
 // Source: https://www.carlrippon.com/strongly-typed-react-redux-code-with-typescript/
+
+// WEBPAGES CREATORS
 
 export const getWebpagesActionCreator: ActionCreator<ThunkAction<
   // The type of the last action to be dispatched - will always be promise<T> for async actions
@@ -134,5 +138,48 @@ export const updateWebpagesActionCreator: ActionCreator<ThunkAction<
       },
     };
     return dispatch(updateWebPageAction);
+  };
+};
+
+// HEADER CREATORS
+
+export const getHeaderActionCreator: ActionCreator<ThunkAction<
+  // The type of the last action to be dispatched - will always be promise<T> for async actions
+  Promise<GetHeaderAction>,
+  // The type for the data within the last action
+  HeaderItem,
+  // The type of the parameter for the nested function
+  null,
+  // The type of the last action to be dispatched
+  GetHeaderAction
+>> = () => {
+  return async (dispatch: Dispatch) => {
+    const getHeaderAction: GetHeaderAction = {
+      type: 'GET_HEADER_TITLE',
+    };
+    return dispatch(getHeaderAction);
+  };
+};
+
+
+export const updateHeaderCreator: ActionCreator<ThunkAction<
+  // The type of the last action to be dispatched - will always be promise<T> for async actions
+  Promise<UpdateHeaderAction>,
+  // The type for the data within the last action
+  HeaderItem,
+  // The type of the parameter for the nested function
+  HeaderItem,
+  // The type of the last action to be dispatched
+  UpdateHeaderAction
+>> = (title: string, icon: string) => {
+  return async (dispatch: Dispatch) => {
+    const updateHeaderAction: UpdateHeaderAction = {
+      type: 'UPDATE_HEADER_TITLE',
+      headerItem: {
+        icon,
+        title,
+      }
+    };
+    return dispatch(updateHeaderAction);
   };
 };

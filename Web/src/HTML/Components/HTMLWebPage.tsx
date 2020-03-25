@@ -10,13 +10,17 @@ import {
 import {
   getWebpagesActionCreator,
   updateWebpagesActionCreator,
-  getWebpagesByNameActionCreator
+  getWebpagesByNameActionCreator,
+  updateHeaderCreator
 } from "src/Redux/Actions/ActionCreators";
 import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "@reduxjs/toolkit";
 import { IAppState } from "src/Redux/Store/Store";
 import { useEffect, useState, useCallback } from "react";
 import { ToastMessage } from "src/components/controls/Toast";
+import { withRouter, RouteComponentProps, RouteProps } from "react-router-dom";
+import { Paths } from "src/Utils/Paths";
+import { HeaderActions } from "src/Redux/Reducers/HeaderReducer";
 
 interface Props {
   webPageName: string;
@@ -27,39 +31,32 @@ interface Props {
   isLoading: boolean;
   updateWebPages: (Page: HTMLPage) => Promise<UpdateWebPagesAction>;
   fetchWebpageByName: (pageName: string) => Promise<FetchWebPageByNameAction>;
+  updateHeader: (title: string, icon: string) => Promise<HeaderActions>;
 }
 
-const HTMLWebPage: React.FC<Props> = ({
-  webPageName,
-  fetchWebPages,
-  webPages,
-  webPage,
-  apiError,
-  isLoading,
-  updateWebPages,
-  fetchWebpageByName
-}) => {
+const HTMLWebPage = (props: Props & RouteComponentProps<any> & RouteProps) => {
   const [showToast, setShowToast] = useState(false);
   const [ApiErrorTitle, setApiErrorTitle] = useState("");
   const [ApiErrorMessage, setApiErrorMessage] = useState("");
 
   const SetToast = useCallback(() => {
-    setShowToast(apiError.IsError);
-    setApiErrorTitle(`${apiError.StatusCode}`);
-    setApiErrorMessage(apiError.ErrorMessage);
-  }, [apiError.IsError, apiError.StatusCode,apiError.ErrorMessage]);
+    setShowToast(props.apiError.IsError);
+    setApiErrorTitle(`${props.apiError.StatusCode}`);
+    setApiErrorMessage(props.apiError.ErrorMessage);
+  }, [props.apiError.IsError, props.apiError.StatusCode,props.apiError.ErrorMessage]);
 
   const fetchData = useCallback(async () => {
-    await fetchWebpageByName(webPageName);
+    await props.fetchWebpageByName(props.webPageName);
     SetToast();
-  }, [SetToast, fetchWebpageByName,webPageName]);
+  }, [props,SetToast]);
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
   const OnToastClose = () => {
-    window.location.href = "/Home";
+    props.updateHeader("Home", "home");
+    props.history.push(Paths.FRONTEND_HOME)
   };
 
   return (
@@ -73,7 +70,7 @@ const HTMLWebPage: React.FC<Props> = ({
         message={ApiErrorMessage}
       />
       <div>
-        <h1>{webPage.Content}</h1>
+        <h1>{props.webPage.Content}</h1>
       </div>
     </>
   );
@@ -94,8 +91,9 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
     updateWebPages: (Page: HTMLPage) =>
       dispatch(updateWebpagesActionCreator(Page)),
     fetchWebpageByName: (pageName: string) =>
-      dispatch(getWebpagesByNameActionCreator(pageName))
+      dispatch(getWebpagesByNameActionCreator(pageName)),
+    updateHeader: (title: string, icon: string) => dispatch(updateHeaderCreator(title, icon)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HTMLWebPage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HTMLWebPage));

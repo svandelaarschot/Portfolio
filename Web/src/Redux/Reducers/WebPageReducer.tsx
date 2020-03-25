@@ -1,6 +1,4 @@
 import { Action, Reducer } from "@reduxjs/toolkit";
-import { IAppState } from "../Store/Store";
-import { combineReducers } from "redux";
 
 // Source: https://www.carlrippon.com/strongly-typed-react-redux-code-with-typescript/
 
@@ -123,7 +121,3 @@ export const webPagereducer: Reducer<HTMLPageState, WebPagesActions> = (
       return state;
   }
 };
-
-export const rootReducer = combineReducers<IAppState>({
-  HTMLPageState: webPagereducer
-});

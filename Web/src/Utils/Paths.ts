@@ -1,7 +1,7 @@
 export enum Paths {
   /*Frontend */
   FRONTEND_HOME = "/Home",
-  FRONTEND_ABOUT = "/About",
+  FRONTEND_ABOUT = "/AboutMe",
   FRONTEND_SKILLS = "/Skills",
   FRONTEND_PROJECTS = "/Projects",
   FRONTEND_CONTACT = "/Contact",

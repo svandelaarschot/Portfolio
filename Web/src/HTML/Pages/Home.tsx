@@ -1,17 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 import DynamicPanel from "../Components/DynamicPanel";
 import styled from "styled-components";
-
-interface HomeState {}
+import { withRouter } from "react-router-dom";
 
 const Container = styled.div``;
 
-export class Home extends Component<{}, HomeState> {
-  componentDidMount = () => {};
-
-  componentDidUpdate = () => {};
-
-  render() {
+const Home = () => {
     return (
       <Container className="wrapper">
         <DynamicPanel title={"Welcome"} icon={"info-circle"} />
@@ -19,5 +13,6 @@ export class Home extends Component<{}, HomeState> {
         <DynamicPanel title={"Contact"} icon={"sign"} />
       </Container>
     );
-  }
 }
+
+export default withRouter(Home);

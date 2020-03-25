@@ -4,11 +4,10 @@ import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import Login from "./Backend/HTML/Login";
 import { Provider } from "react-redux";
 import { configureStore } from "./Redux/Store/Store";
-import { Home } from "./HTML/Pages/Home";
+import Home from "./HTML/Pages/Home";
 import HTMLWebPage from "./HTML/Components/HTMLWebPage";
 import { Contact } from "./HTML/Pages/Contact";
 import CPanel from "./Backend/HTML/CPanel";
-import { HeaderProvider } from "./components/Header/HeaderContext";
 import Header from "./components/Header/Header";
 import Menu, { MenuType } from "./components/Menu/Menu";
 import { Theme } from "./Enums/Theme";
@@ -20,7 +19,6 @@ import { Paths } from "./Utils/Paths";
 */
 const App = ({ store = configureStore() }) => {
   return (
-    <HeaderProvider icon={"home"} title={"Home"}>
       <Provider store={store}>
         <Router>
           <Menu
@@ -60,7 +58,6 @@ const App = ({ store = configureStore() }) => {
           </div>
         </Router>
       </Provider>
-    </HeaderProvider>
   );
 };
 

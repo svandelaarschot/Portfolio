@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import {
   AppHeader,
   AppHeaderImage,
@@ -7,40 +7,51 @@ import {
 } from "./styles";
 import { GetIconFontAwesomeByName } from "../../Utils/Utils";
 import "bootstrap/dist/css/bootstrap.min.css";
-import HeaderContext from "../Header/HeaderContext";
 import { withRouter, RouteComponentProps } from "react-router-dom";
-import { Paths } from "src/Utils/Paths";
+import { IAppState } from "src/Redux/Store/Store";
+import { ThunkDispatch } from "redux-thunk";
+import { AnyAction } from "@reduxjs/toolkit";
+import { updateHeaderCreator, getHeaderActionCreator } from "src/Redux/Actions/ActionCreators";
+import { UpdateHeaderAction, GetHeaderAction } from "src/Redux/Reducers/HeaderReducer";
+import { connect } from "react-redux";
+import { HeaderItem } from "./HeaderItem";
 
-interface HeaderProps {}
+interface Props {
+  headerItem: HeaderItem;
+  updateHeader: (title: string, icon: string) => Promise<UpdateHeaderAction>;
+  getHeader: () => Promise<GetHeaderAction>;
+}
 
-type Props = HeaderProps & RouteComponentProps<any>;
+const Header = (props: Props & RouteComponentProps<any>) => {
 
-class Header extends Component<Props> {
-  static contextType = HeaderContext;
+  useEffect(() => {
+    props.getHeader();
+  }, []);
 
-  componentDidMount() {
-    const { setHeaderItem } = this.context;
-    if (this.props.location.pathname === Paths.ROOT) {
-      setHeaderItem({
-        icon: "home",
-        title: "Home"
-      });
-    }
-  }
-
-  render() {
-    const { HeaderItem } = this.context;
     return (
       <AppHeader id="Header">
         <AppHeaderTitle id="HeaderTitle">
-          {GetIconFontAwesomeByName(HeaderItem.icon)}
-          <span>&nbsp;{HeaderItem.title}</span>
+          {GetIconFontAwesomeByName(props.headerItem.icon)}
+          <span>&nbsp;{props.headerItem.title}</span>
         </AppHeaderTitle>
         <AppHeaderLine />
         <AppHeaderImage />
       </AppHeader>
     );
-  }
 }
 
-export default withRouter(Header);
+const mapStateToProps = (store: IAppState) => {
+  return {
+    headerItem: store.HeaderState.headerItem,
+  };
+};
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
+  return {
+    updateHeader: (title: string, icon:string) => dispatch(updateHeaderCreator(title, icon)),
+    getHeader: () => dispatch(getHeaderActionCreator()),
+  }
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
+
