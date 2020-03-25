@@ -16,7 +16,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Paths } from "./Utils/Paths";
 
 /*
-React Routing: https://reacttraining.com/react-router/web/guides/philosophy
+  React Routing: https://reacttraining.com/react-router/web/guides/philosophy
 */
 const App = ({ store = configureStore() }) => {
   return (
