@@ -21,6 +21,7 @@ import { ToastMessage } from "src/components/controls/Toast";
 import { withRouter, RouteComponentProps, RouteProps } from "react-router-dom";
 import { Paths } from "src/Utils/Paths";
 import { HeaderActions } from "src/Redux/Reducers/HeaderReducer";
+import { LoadingMask } from "./LoadingMask";
 
 interface Props {
   webPageName: string;
@@ -43,32 +44,37 @@ const HTMLWebPage = (props: Props & RouteComponentProps<any> & RouteProps) => {
     setShowToast(props.apiError.IsError);
     setApiErrorTitle(`${props.apiError.StatusCode}`);
     setApiErrorMessage(props.apiError.ErrorMessage);
-  }, [props.apiError.IsError, props.apiError.StatusCode,props.apiError.ErrorMessage]);
+  }, [
+    props.apiError.IsError,
+    props.apiError.StatusCode,
+    props.apiError.ErrorMessage
+  ]);
 
   const fetchData = useCallback(async () => {
     await props.fetchWebpageByName(props.webPageName);
     SetToast();
-  }, [props,SetToast]);
+  }, [props, SetToast]);
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+  }, []);
 
   const OnToastClose = () => {
     props.updateHeader("Home", "home");
-    props.history.push(Paths.FRONTEND_HOME)
+    props.history.push(Paths.FRONTEND_HOME);
   };
 
   return (
     <>
       <ToastMessage
         closeButton={false}
-        delay={1000}
+        delay={1400}
         onClose={OnToastClose}
         show={showToast}
         title={ApiErrorTitle}
         message={ApiErrorMessage}
       />
+      <LoadingMask showLoading={props.isLoading} />
       <div>
         <h1>{props.webPage.Content}</h1>
       </div>
@@ -92,8 +98,11 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
       dispatch(updateWebpagesActionCreator(Page)),
     fetchWebpageByName: (pageName: string) =>
       dispatch(getWebpagesByNameActionCreator(pageName)),
-    updateHeader: (title: string, icon: string) => dispatch(updateHeaderCreator(title, icon)),
+    updateHeader: (title: string, icon: string) =>
+      dispatch(updateHeaderCreator(title, icon))
   };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HTMLWebPage));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(HTMLWebPage)
+);
