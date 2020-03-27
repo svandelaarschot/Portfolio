@@ -53,16 +53,16 @@ const HTMLWebPage = (props: Props & RouteComponentProps<any> & RouteProps) => {
   const fetchData = useCallback(async () => {
     await props.fetchWebpageByName(props.webPageName);
     SetToast();
-  }, [props, SetToast]);
+  }, [SetToast, props]);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
-  const OnToastClose = () => {
+  const OnToastClose = useCallback(() => {
     props.updateHeader("Home", "home");
     props.history.push(Paths.FRONTEND_HOME);
-  };
+  }, [props]);
 
   return (
     <>
@@ -75,9 +75,7 @@ const HTMLWebPage = (props: Props & RouteComponentProps<any> & RouteProps) => {
         message={ApiErrorMessage}
       />
       <LoadingMask showLoading={props.isLoading} />
-      <div>
-        <h1>{props.webPage.Content}</h1>
-      </div>
+      <div>{props.webPage.Content}</div>
     </>
   );
 };

@@ -9,8 +9,19 @@ import { ColorType } from "src/components/controls/BaseControlProps";
 import { ToastMessage } from "src/components/controls/Toast";
 import { useEffect } from "react";
 import { useHistory, withRouter } from "react-router-dom";
-import { setAuthentication } from "src/Utils/Authentication";
 import { Paths } from "src/Utils/Paths";
+import { ThunkDispatch } from "redux-thunk";
+import {
+  updateAuthenticationCreator,
+  getAuthenticationActionCreator
+} from "src/Redux/Actions/ActionCreators";
+import { IAppState } from "src/Redux/Store/Store";
+import { connect } from "react-redux";
+import { AnyAction } from "@reduxjs/toolkit";
+import {
+  AuthenticationActions,
+  AuthenticationItem
+} from "src/Redux/Reducers/AuthenticationReducer";
 
 /* Always put styled-components outside the class or functional components !!! */
 const LoginContainer = styled.div`
@@ -39,7 +50,14 @@ const SignInIcon = styled(LockOpen)`
 `;
 /*============================================================ */
 
-interface LoginProps {}
+interface LoginProps {
+  authenticationItem: AuthenticationItem;
+  updateAuthentication: (
+    isAuth: boolean,
+    username?: string
+  ) => Promise<AuthenticationActions>;
+  getAuthentication: () => Promise<AuthenticationActions>;
+}
 
 const Login = (props: LoginProps) => {
   const history = useHistory();
@@ -50,25 +68,22 @@ const Login = (props: LoginProps) => {
   const [password, setPassword] = React.useState("");
 
   useEffect(() => {
-    setAuthentication(false);
-    setShowToast(false);
-  }, [setShowToast]);
+    props.getAuthentication();
+    if (props.authenticationItem.isAuth) {
+      history.push({ pathname: Paths.CPANEL });
+    } else {
+      setShowToast(false);
+    }
+  }, [props, history]);
 
   const handleLogin = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-
-    // Login Logic Here
-    console.log(userName);
-    console.log(password);
-
     if (userName && password) {
-      
       // Do Fetch Login Logic here.... and Set the isAuth!
       setShowToast(false);
-      setAuthentication(true);
-      history.push({ pathname: Paths.CPANEL});
-
+      props.updateAuthentication(true, userName);
+      history.push({ pathname: Paths.CPANEL });
     } else {
       setShowToast(true);
       setToastTitle("Required Field");
@@ -128,4 +143,18 @@ const Login = (props: LoginProps) => {
   );
 };
 
-export default withRouter(Login);
+const mapStateToProps = (store: IAppState) => {
+  return {
+    authenticationItem: store.AuthenticationState.authenticationItem
+  };
+};
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
+  return {
+    updateAuthentication: (isAuth: boolean, username?: string) =>
+      dispatch(updateAuthenticationCreator(isAuth, username)),
+    getAuthentication: () => dispatch(getAuthenticationActionCreator())
+  };
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

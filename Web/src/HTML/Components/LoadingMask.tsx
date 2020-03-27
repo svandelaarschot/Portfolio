@@ -43,7 +43,11 @@ export const LoadingMask = (props: Props) => {
       <CSS />
       <LoadingMaskContrainer>
         <div className={"ImageWrapper"}>
-          <img className="LoadingMask" src="images/loading2.gif" />
+          <img
+            className="LoadingMask"
+            src="images/loading2.gif"
+            alt="loading"
+          />
           <span className={"LoadingText"}>{props.loadingText}</span>
         </div>
       </LoadingMaskContrainer>

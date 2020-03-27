@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import React from "react";
 import Menu, { MenuType } from "src/components/Menu/Menu";
 import { Theme } from "src/Enums/Theme";
@@ -13,19 +13,32 @@ import {
 import { Dashboard } from "./Dashboard";
 import { Webpages } from "./Webpages";
 import { ToastMessage } from "src/components/controls/Toast";
-import { setAuthentication, getAuthentication } from "src/Utils/Authentication";
 import { Paths } from "src/Utils/Paths";
 import { connect } from "react-redux";
 import { IAppState } from "src/Redux/Store/Store";
 import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "@reduxjs/toolkit";
-import { updateHeaderCreator } from "src/Redux/Actions/ActionCreators";
+import {
+  updateHeaderCreator,
+  updateAuthenticationCreator,
+  getAuthenticationActionCreator
+} from "src/Redux/Actions/ActionCreators";
 import { HeaderActions } from "src/Redux/Reducers/HeaderReducer";
 import { HeaderItem } from "src/components/Header/HeaderItem";
+import {
+  AuthenticationActions,
+  AuthenticationItem
+} from "src/Redux/Reducers/AuthenticationReducer";
 
 interface CPanelProps extends RouteComponentProps<any> {
+  authenticationItem: AuthenticationItem;
   headerItem: HeaderItem;
   updateHeader: (title: string, icon: string) => Promise<HeaderActions>;
+  updateAuthentication: (
+    isAuth: boolean,
+    username?: string
+  ) => Promise<AuthenticationActions>;
+  getAuthentication: () => Promise<AuthenticationActions>;
 }
 
 const CSS = createGlobalStyle`
@@ -44,19 +57,17 @@ const CPanelContent = styled.div`
 `;
 
 const CPanel = (props: CPanelProps) => {
-  
-  const [isAuth, setIsAuth] = useState(getAuthentication());
+  props.getAuthentication();
 
   useEffect(() => {
     props.updateHeader("CPanel", "users-cog");
-    if (!isAuth) {
+    if (!props.authenticationItem.isAuth) {
       props.history.push(Paths.LOGIN);
     }
-  }, [isAuth, setIsAuth, props.history]);
+  }, []);
 
   const OnToastClose = () => {
-    setAuthentication(false);
-    setIsAuth(getAuthentication());
+    props.updateAuthentication(false);
     props.history.push(Paths.LOGIN);
   };
 
@@ -84,7 +95,7 @@ const CPanel = (props: CPanelProps) => {
               closeButton={false}
               delay={1000}
               onClose={OnToastClose}
-              show={!isAuth}
+              show={!props.authenticationItem.isAuth}
               title={"Logout"}
               message={"You will be logged-out and redirected!"}
             />
@@ -97,15 +108,19 @@ const CPanel = (props: CPanelProps) => {
 
 const mapStateToProps = (store: IAppState) => {
   return {
-    headerItem: store.HeaderState.headerItem,
+    authenticationItem: store.AuthenticationState.authenticationItem,
+    headerItem: store.HeaderState.headerItem
   };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
   return {
-    updateHeader: (title: string, icon: string) => dispatch(updateHeaderCreator(title, icon)),
-  }
+    updateHeader: (title: string, icon: string) =>
+      dispatch(updateHeaderCreator(title, icon)),
+    updateAuthentication: (isAuth: boolean, username?: string) =>
+      dispatch(updateAuthenticationCreator(isAuth, username)),
+    getAuthentication: () => dispatch(getAuthenticationActionCreator())
+  };
 };
-
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CPanel));
