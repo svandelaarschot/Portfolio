@@ -36,7 +36,7 @@ export const MenuButton = (props: MenuButtonItem) => {
         data-toggle={`${props.IsModal ? "modal" : ""}`}
         data-target={`#${props.ModalId ? props.ModalId : ""}`}
         className={`nav-link ${props.isActive ? "active" : ""}`}
-        to={`${props.Url ? props.Url : ""}`}
+        to={`${props.Url ? props.Url : "#"}`}
         onClick={onClick}
       >
         {GetIconFontAwesomeByName(props.Icon as IconName)}

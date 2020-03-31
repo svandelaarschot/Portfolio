@@ -35,6 +35,7 @@ interface MenuProps extends RouteComponentProps<any> {
   enableRoutePrefix?: boolean;
   headerItem: HeaderItem;
   updateHeader: (title: string, icon: string) => Promise<HeaderActions>;
+  logoutFunction?(): void;
 }
 
 const LI = styled.li``;
@@ -109,17 +110,21 @@ class Menu extends Component<MenuProps> {
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
     button: MenuButtonItem
   ) => {
-   
-      const icon = button.Icon;
-      const title = `${
-        this.props.enableRoutePrefix
-          ? this.RoutePrefix
-            ? this.RoutePrefix + " / "
-            : ""
+    const icon = button.Icon;
+    const title = `${
+      this.props.enableRoutePrefix
+        ? this.RoutePrefix
+          ? this.RoutePrefix + " / "
           : ""
-      }${button.Name}`;
+        : ""
+    }${button.Name}`;
+   
+    if (button.Name.toUpperCase() !== "LOGOUT") {
       this.props.updateHeader(title, icon);
-    }; 
+    } else {
+      this.props.logoutFunction!();
+    }
+  };
 
   getTheme = () => {
     switch (this.props.Theme) {
@@ -135,45 +140,44 @@ class Menu extends Component<MenuProps> {
   render() {
     const ThemeClass = this.getTheme();
     return (
-        <ThemeProvider theme={this.props}>
-          <Nav className={`navbar navbar-expand-lg ${ThemeClass}`}>
-            {this.props.showBrand && (
-              <Brand className="navbar-brand" href="#">
-                {this.props.AppName}
-              </Brand>
-            )}
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon" />
-            </button>
-            <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav w-100">{this.loadMenuData()}</ul>
-            </div>
-          </Nav>
-        </ThemeProvider>
+      <ThemeProvider theme={this.props}>
+        <Nav className={`navbar navbar-expand-lg ${ThemeClass}`}>
+          {this.props.showBrand && (
+            <Brand className="navbar-brand" href="#">
+              {this.props.AppName}
+            </Brand>
+          )}
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon" />
+          </button>
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav w-100">{this.loadMenuData()}</ul>
+          </div>
+        </Nav>
+      </ThemeProvider>
     );
   }
 }
 
 const mapStateToProps = (store: IAppState) => {
   return {
-    headerItem: store.HeaderState.headerItem,
+    headerItem: store.HeaderState.headerItem
   };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
   return {
-    updateHeader: (title: string, icon: string) => dispatch(updateHeaderCreator(title, icon)),
-  }
+    updateHeader: (title: string, icon: string) =>
+      dispatch(updateHeaderCreator(title, icon))
+  };
 };
 
-
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Menu));
-

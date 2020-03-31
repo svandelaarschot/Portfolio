@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import Menu, { MenuType } from "src/components/Menu/Menu";
 import { Theme } from "src/Enums/Theme";
@@ -57,9 +57,10 @@ const CPanelContent = styled.div`
 `;
 
 const CPanel = (props: CPanelProps) => {
-  props.getAuthentication();
+  const [isAuth, setIsAuth] = useState(props.authenticationItem.isAuth);
 
   useEffect(() => {
+    props.getAuthentication();
     props.updateHeader("CPanel", "users-cog");
     if (!props.authenticationItem.isAuth) {
       props.history.push(Paths.LOGIN);
@@ -71,10 +72,15 @@ const CPanel = (props: CPanelProps) => {
     props.history.push(Paths.LOGIN);
   };
 
+  const Logout = () => {
+    setIsAuth(false);
+  };
+
   return (
     <>
       <CSS />
       <Menu
+        logoutFunction={Logout}
         menuBarHeight={40}
         showBrand={false}
         MenuType={MenuType.Backend}
@@ -82,6 +88,14 @@ const CPanel = (props: CPanelProps) => {
         AppName="Backend"
       />
       <CPanelContent>
+        <ToastMessage
+          closeButton={false}
+          delay={3000}
+          onClose={OnToastClose}
+          show={!isAuth}
+          title={"Logout"}
+          message={"You will be logged-out and redirected!"}
+        />
         <Switch>
           <Redirect exact from={Paths.CPANEL} to={Paths.CPANEL_DASHBOARD} />
           <Route exact path={Paths.CPANEL_DASHBOARD}>
@@ -89,16 +103,6 @@ const CPanel = (props: CPanelProps) => {
           </Route>
           <Route exact path={Paths.CPANEL_WEBPAGES}>
             <Webpages RouteLocation={window.location} />
-          </Route>
-          <Route exact path={Paths.CPANEL_LOGOUT}>
-            <ToastMessage
-              closeButton={false}
-              delay={1000}
-              onClose={OnToastClose}
-              show={!props.authenticationItem.isAuth}
-              title={"Logout"}
-              message={"You will be logged-out and redirected!"}
-            />
           </Route>
         </Switch>
       </CPanelContent>
