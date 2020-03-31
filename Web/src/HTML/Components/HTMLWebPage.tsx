@@ -53,16 +53,16 @@ const HTMLWebPage = (props: Props & RouteComponentProps<any> & RouteProps) => {
   const fetchData = useCallback(async () => {
     await props.fetchWebpageByName(props.webPageName);
     SetToast();
-  }, [SetToast, props]);
+  }, []);
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+  }, [props.webPageName]);
 
   const OnToastClose = useCallback(() => {
     props.updateHeader("Home", "home");
     props.history.push(Paths.FRONTEND_HOME);
-  }, [props]);
+  }, []);
 
   return (
     <>
