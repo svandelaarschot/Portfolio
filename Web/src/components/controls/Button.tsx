@@ -1,4 +1,3 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import styled, { ThemeProvider } from "styled-components";
 import React from "react";
 import { BaseControlProps, ColorType, getColorType } from "./BaseControlProps";

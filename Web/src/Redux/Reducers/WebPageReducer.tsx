@@ -1,13 +1,8 @@
 import { Action, Reducer } from "@reduxjs/toolkit";
+import { HTMLPage } from "src/Backend/Classes/HTMLPage";
+import { Map } from "immutable";
 
 // Source: https://www.carlrippon.com/strongly-typed-react-redux-code-with-typescript/
-
-export interface HTMLPage {
-  Id: number;
-  Title: string;
-  Content: string;
-  IsActive: boolean;
-}
 
 export interface APIError {
   ErrorMessage: string;
@@ -21,17 +16,9 @@ export const InitialError: APIError = {
   IsError: false
 };
 
-// Initial Empty Webpage.
-const InitialWebPage: HTMLPage = {
-  Id: 0,
-  Title: "",
-  Content: "",
-  IsActive: false
-};
-
-// Define the Character State
+// Define the State
 export interface HTMLPageState {
-  readonly webPages: HTMLPage[];
+  readonly webPages: Map<number, HTMLPage>;
   readonly webPage: HTMLPage;
   readonly isLoading: boolean;
   readonly isUpdating: boolean;
@@ -39,8 +26,8 @@ export interface HTMLPageState {
 }
 
 const initialState: HTMLPageState = {
-  webPages: [],
-  webPage: InitialWebPage,
+  webPages: Map(),
+  webPage: new HTMLPage(),
   isLoading: false,
   isUpdating: false,
   apiError: InitialError
@@ -49,7 +36,8 @@ const initialState: HTMLPageState = {
 export interface FetchingWebPagesAction extends Action<"FETCHING_WEBPAGES"> {}
 
 export interface FetchWebPagesAction extends Action<"FETCH_WEBPAGES"> {
-  webPages: HTMLPage[];
+  webPages: Map<number, HTMLPage>;
+  apiError: APIError;
 }
 
 export interface UpdatingWebPagesAction extends Action<"UPDATING_WEBPAGES"> {
@@ -115,7 +103,7 @@ export const webPagereducer: Reducer<HTMLPageState, WebPagesActions> = (
       return {
         ...state,
         isUpdating: false,
-        updatedwebPage: action.webPage
+        webPage: action.webPage
       };
     default:
       return state;

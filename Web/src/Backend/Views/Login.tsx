@@ -74,7 +74,7 @@ const Login = (props: LoginProps) => {
     } else {
       setShowToast(false);
     }
-  }, [props, history]);
+  }, []);
 
   const handleLogin = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>

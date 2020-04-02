@@ -11,7 +11,6 @@ import {
   withRouter
 } from "react-router-dom";
 import { Dashboard } from "./Dashboard";
-import { Webpages } from "./Webpages";
 import { ToastMessage } from "src/components/controls/Toast";
 import { Paths } from "src/Utils/Paths";
 import { connect } from "react-redux";
@@ -29,6 +28,7 @@ import {
   AuthenticationActions,
   AuthenticationItem
 } from "src/Redux/Reducers/AuthenticationReducer";
+import Webpages from "./Webpages";
 
 interface CPanelProps extends RouteComponentProps<any> {
   authenticationItem: AuthenticationItem;
@@ -42,14 +42,14 @@ interface CPanelProps extends RouteComponentProps<any> {
 }
 
 const CSS = createGlobalStyle`
-.container-fluid,
-.container-fluid.mt-3 {
-  margin-top:0 !important;
-  padding:0 !important;
-}
-#Header {
-  border-bottom:unset;
-}
+  .container-fluid,
+  .container-fluid.mt-3 {
+    margin-top:0 !important;
+    padding:0 !important;
+  }
+  #Header {
+    border-bottom:unset;
+  }
 `;
 
 const CPanelContent = styled.div`
@@ -65,7 +65,7 @@ const CPanel = (props: CPanelProps) => {
     if (!props.authenticationItem.isAuth) {
       props.history.push(Paths.LOGIN);
     }
-  }, []);
+  }, [props.authenticationItem.isAuth]);
 
   const OnToastClose = () => {
     props.updateAuthentication(false);
@@ -99,10 +99,10 @@ const CPanel = (props: CPanelProps) => {
         <Switch>
           <Redirect exact from={Paths.CPANEL} to={Paths.CPANEL_DASHBOARD} />
           <Route exact path={Paths.CPANEL_DASHBOARD}>
-            <Dashboard RouteLocation={window.location} />
+            <Dashboard />
           </Route>
           <Route exact path={Paths.CPANEL_WEBPAGES}>
-            <Webpages RouteLocation={window.location} />
+            <Webpages />
           </Route>
         </Switch>
       </CPanelContent>

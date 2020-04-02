@@ -1,15 +1,10 @@
-import { HTMLPage } from "src/Redux/Reducers/WebPageReducer";
+import { Record } from "immutable";
 
-export const DefaultHTMLPage: HTMLPage = {
-  Id: 0,
-  Title: "Not Found",
-  Content: "This page is not found or is not been added yet!",
-  IsActive: true
-};
+export const HTMLPageRecord = Record({
+  id: 0,
+  title: "",
+  content: "",
+  isActive: true
+});
 
-export const ErrorHTMLPage: HTMLPage = {
-  Id: 0,
-  Title: "Error",
-  Content: "API Error!",
-  IsActive: true
-};
+export class HTMLPage extends HTMLPageRecord {}
