@@ -97,12 +97,14 @@ export const webPagereducer: Reducer<HTMLPageState, WebPagesActions> = (
     case "UPDATING_WEBPAGES":
       return {
         ...state,
-        isUpdating: true
+        isUpdating: true,
+        isLoading: false
       };
     case "UPDATE_WEBPAGES":
       return {
         ...state,
         isUpdating: false,
+        isLoading: false,
         webPage: action.webPage
       };
     default:

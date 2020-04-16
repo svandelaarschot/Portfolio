@@ -12,17 +12,17 @@ namespace API.Repository
     public class HTMLPageRepository
     {
         private readonly IConfiguration Configuration;
+        private readonly DbContextOptionsBuilder<MyWebApiContext> optionsBuilder;
 
         public HTMLPageRepository(IConfiguration configuration)
         {
             Configuration = configuration;
+            optionsBuilder = new DbContextOptionsBuilder<MyWebApiContext>();
+            optionsBuilder.UseNpgsql(Configuration.GetConnectionString("PostGresSQL"));
         }
 
         public async Task<List<HTMLPage>> GetAllAsync()
         {
-            var optionsBuilder = new DbContextOptionsBuilder<MyWebApiContext>();
-            optionsBuilder.UseNpgsql(Configuration.GetConnectionString("PostGresSQL"));
-
             using (var context = new MyWebApiContext(optionsBuilder.Options))
             {
                 return await context.HTMLPages.ToListAsync();
@@ -31,9 +31,6 @@ namespace API.Repository
 
         public async Task<HTMLPage> GetSingleAsync(string Title)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<MyWebApiContext>();
-            optionsBuilder.UseNpgsql(Configuration.GetConnectionString("PostGresSQL"));
-
             using (var context = new MyWebApiContext(optionsBuilder.Options))
             {
                 return await context.HTMLPages.FirstOrDefaultAsync(x=> x.Title == Title);

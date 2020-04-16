@@ -4,7 +4,7 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham.css";
 import styled from "styled-components";
-import { GridApi, GridReadyEvent, ColDef } from "ag-grid-community";
+import { GridApi, GridReadyEvent } from "ag-grid-community";
 import { IAppState } from "src/Redux/Store/Store";
 import { AnyAction } from "@reduxjs/toolkit";
 import { ThunkDispatch } from "redux-thunk";
@@ -22,7 +22,7 @@ import {
 } from "src/Redux/Reducers/AuthenticationReducer";
 import { HeaderItem } from "src/components/Header/HeaderItem";
 import { HeaderActions } from "src/Redux/Reducers/HeaderReducer";
-import { Map } from "immutable";
+import { Map, fromJS } from "immutable";
 import { HTMLPage } from "../Classes/HTMLPage";
 import {
   FetchWebPagesAction,
@@ -72,7 +72,7 @@ const Webpages = (props: WebpagesProps) => {
     fetchData();
   }, [fetchData]);
 
-  const colDefs: ColDef[] = [
+  const colDefs = [
     {
       headerName: "Title",
       field: "title"
@@ -87,10 +87,12 @@ const Webpages = (props: WebpagesProps) => {
     return;
   }, []);
 
-  const onGridReady = (event: GridReadyEvent) => {
-    gridApi = event.api;
+  const onGridReady = (e: GridReadyEvent) => {
+    gridApi = e.api;
     gridApi.sizeColumnsToFit();
   };
+
+  const pages = fromJS(props.webPages);
 
   return (
     <>
@@ -108,8 +110,10 @@ const Webpages = (props: WebpagesProps) => {
           style={{ width: "100%", height: "500px" }}
         >
           <AgGridReact
+            rowSelection={"single"}
+            deltaRowDataMode={true}
             columnDefs={colDefs}
-            rowData={props.webPages?.toArray()}
+            rowData={pages.toArray()}
             onGridReady={onGridReady}
           />
         </div>

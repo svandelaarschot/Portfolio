@@ -10,18 +10,18 @@ namespace API.Classes
 {
     public class HTMLPage
     {
-        [JsonProperty(PropertyName = "Id")]
+        [JsonProperty(PropertyName = "id")]
         [ForeignKey("Id")]
         public long Id { get; set; }
 
-        [JsonProperty(PropertyName = "Title")]
+        [JsonProperty(PropertyName = "title")]
         [Required, MaxLength(150)]
         public string Title { get; set; }
 
-        [JsonProperty(PropertyName = "Content")]
+        [JsonProperty(PropertyName = "content")]
         public string Content { get; set; }
 
-        [JsonProperty(PropertyName = "IsActive")]
+        [JsonProperty(PropertyName = "isActive")]
         public bool IsActive { get; set; }
 
         public HTMLPage()

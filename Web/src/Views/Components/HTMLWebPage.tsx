@@ -20,7 +20,6 @@ import { ToastMessage } from "src/components/controls/Toast";
 import { withRouter, RouteComponentProps, RouteProps } from "react-router-dom";
 import { Paths } from "src/Utils/Paths";
 import { HeaderActions } from "src/Redux/Reducers/HeaderReducer";
-import { LoadingMask } from "./LoadingMask";
 import { HTMLPage } from "src/Backend/Classes/HTMLPage";
 import { Map } from "immutable";
 
@@ -75,7 +74,6 @@ const HTMLWebPage = (props: Props & RouteComponentProps<any> & RouteProps) => {
         title={ApiErrorTitle}
         message={ApiErrorMessage}
       />
-      <LoadingMask showLoading={props.isLoading} />
       <div>{props.webPage.content}</div>
     </>
   );
