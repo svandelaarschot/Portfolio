@@ -12,13 +12,13 @@ import {
   updateHeaderCreator,
   getAuthenticationActionCreator,
   updateAuthenticationCreator,
-  getWebpagesActionCreator
+  getWebpagesActionCreator,
 } from "src/Redux/Actions/ActionCreators";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   AuthenticationActions,
-  AuthenticationItem
+  AuthenticationItem,
 } from "src/Redux/Reducers/AuthenticationReducer";
 import { HeaderItem } from "src/components/Header/HeaderItem";
 import { HeaderActions } from "src/Redux/Reducers/HeaderReducer";
@@ -26,7 +26,7 @@ import { Map, fromJS } from "immutable";
 import { HTMLPage } from "../Classes/HTMLPage";
 import {
   FetchWebPagesAction,
-  APIError
+  APIError,
 } from "src/Redux/Reducers/WebPageReducer";
 import { ToastMessage } from "src/components/controls/Toast";
 
@@ -60,7 +60,7 @@ const Webpages = (props: WebpagesProps) => {
   }, [
     props.apiError.IsError,
     props.apiError.StatusCode,
-    props.apiError.ErrorMessage
+    props.apiError.ErrorMessage,
   ]);
 
   const fetchData = useCallback(async () => {
@@ -75,12 +75,12 @@ const Webpages = (props: WebpagesProps) => {
   const colDefs = [
     {
       headerName: "Title",
-      field: "title"
+      field: "title",
     },
     {
       headerName: "IsActive",
-      field: "isActive"
-    }
+      field: "isActive",
+    },
   ];
 
   const OnToastClose = useCallback(() => {
@@ -93,6 +93,9 @@ const Webpages = (props: WebpagesProps) => {
   };
 
   const pages = fromJS(props.webPages);
+  const getRowNodeId = (params: any) => {
+    return params.id;
+  };
 
   return (
     <>
@@ -110,6 +113,7 @@ const Webpages = (props: WebpagesProps) => {
           style={{ width: "100%", height: "500px" }}
         >
           <AgGridReact
+            getRowNodeId={getRowNodeId}
             rowSelection={"single"}
             deltaRowDataMode={true}
             columnDefs={colDefs}
@@ -127,7 +131,7 @@ const mapStateToProps = (store: IAppState) => {
     webPages: store.HTMLPageState.webPages,
     authenticationItem: store.AuthenticationState.authenticationItem,
     headerItem: store.HeaderState.headerItem,
-    apiError: store.HTMLPageState.apiError
+    apiError: store.HTMLPageState.apiError,
   };
 };
 
@@ -138,7 +142,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
       dispatch(updateHeaderCreator(title, icon)),
     updateAuthentication: (isAuth: boolean, username?: string) =>
       dispatch(updateAuthenticationCreator(isAuth, username)),
-    getAuthentication: () => dispatch(getAuthenticationActionCreator())
+    getAuthentication: () => dispatch(getAuthenticationActionCreator()),
   };
 };
 

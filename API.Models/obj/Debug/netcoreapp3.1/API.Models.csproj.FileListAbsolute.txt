@@ -1,0 +1,9 @@
+F:\ReactJS Portfolio\API.Models\bin\Debug\netcoreapp3.1\API.Models.deps.json
+F:\ReactJS Portfolio\API.Models\bin\Debug\netcoreapp3.1\API.Models.dll
+F:\ReactJS Portfolio\API.Models\obj\Debug\netcoreapp3.1\API.Models.AssemblyInfoInputs.cache
+F:\ReactJS Portfolio\API.Models\obj\Debug\netcoreapp3.1\API.Models.AssemblyInfo.cs
+F:\ReactJS Portfolio\API.Models\bin\Debug\netcoreapp3.1\API.Models.pdb
+F:\ReactJS Portfolio\API.Models\obj\Debug\netcoreapp3.1\API.Models.csprojAssemblyReference.cache
+F:\ReactJS Portfolio\API.Models\obj\Debug\netcoreapp3.1\API.Models.csproj.CoreCompileInputs.cache
+F:\ReactJS Portfolio\API.Models\obj\Debug\netcoreapp3.1\API.Models.dll
+F:\ReactJS Portfolio\API.Models\obj\Debug\netcoreapp3.1\API.Models.pdb

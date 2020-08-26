@@ -14,21 +14,13 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class HTMLPageController : Controller
+    public class HTMLPageController : BaseController
     {
-        public IConfiguration Configuration { get; }
         private HTMLPageRepository _repository { get; }
-        private JsonSerializerSettings _settings { get; }
-        private ILogger _logger { get; }
 
-        public HTMLPageController(IConfiguration configuration, ILogger<HTMLPage> logger)
+        public HTMLPageController(IConfiguration configuration, ILogger<HTMLPage> logger) : base(configuration, logger)
         {
-            Configuration = configuration;
             _repository = new HTMLPageRepository(Configuration);
-            _settings = new JsonSerializerSettings();
-            _settings.Formatting = Formatting.Indented;
-            _settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            _logger = logger;
         }
 
         [HttpGet]

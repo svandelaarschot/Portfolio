@@ -5,15 +5,16 @@ using System.Threading.Tasks;
 using API.Classes;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
-    public class UserInfoController : Controller
+    public class UserInfoController : BaseController
     {
-        public UserInfoController()
+        public UserInfoController(IConfiguration configuration, ILogger<UserInfo> logger) : base(configuration, logger)
         {
 
         }

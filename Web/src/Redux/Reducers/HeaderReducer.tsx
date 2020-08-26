@@ -1,8 +1,6 @@
 import { Action, Reducer } from "@reduxjs/toolkit";
 import { HeaderItem } from "src/components/Header/HeaderItem";
 
-// Source: https://www.carlrippon.com/strongly-typed-react-redux-code-with-typescript/
-
 export interface HeaderState {
   headerItem: HeaderItem;
 }
@@ -11,8 +9,8 @@ const initialState: HeaderState = {
   headerItem: {
     title: "Home",
     icon: "home",
-  }
-}
+  },
+};
 
 export interface UpdateHeaderAction extends Action<"UPDATE_HEADER_TITLE"> {
   headerItem: HeaderItem;
@@ -30,10 +28,10 @@ export const headerReducer: Reducer<HeaderState, HeaderActions> = (
       return {
         ...state,
       };
-      case "UPDATE_HEADER_TITLE":
+    case "UPDATE_HEADER_TITLE":
       return {
         ...state,
-        headerItem: action.headerItem
+        headerItem: action.headerItem,
       };
     default:
       return state;

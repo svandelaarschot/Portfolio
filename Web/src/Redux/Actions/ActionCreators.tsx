@@ -7,13 +7,13 @@ import {
   FetchingWebPageByNameAction,
   FetchWebPageByNameAction,
   APIError,
-  InitialError
+  InitialError,
 } from "../Reducers/WebPageReducer";
 import { UpdateHeaderAction, GetHeaderAction } from "../Reducers/HeaderReducer";
 import { HeaderItem } from "src/components/Header/HeaderItem";
 import {
   GetAuthenticationAction,
-  UpdateAuthenticationAction
+  UpdateAuthenticationAction,
 } from "../Reducers/AuthenticationReducer";
 import { HTMLPage } from "src/Backend/Classes/HTMLPage";
 import { Map } from "immutable";
@@ -37,7 +37,7 @@ export const getWebpagesActionCreator: ActionCreator<ThunkAction<
     const fetchWebpagesAction: FetchWebPagesAction = {
       type: "FETCH_WEBPAGES",
       webPages: APIResult.data,
-      apiError: APIResult.apiError
+      apiError: APIResult.apiError,
     };
     return dispatch(fetchWebpagesAction);
   };
@@ -50,8 +50,8 @@ interface API_Result {
 
 const fetchWebPages = async (): Promise<API_Result> => {
   const result: API_Result = {
-    data: null,
-    apiError: InitialError
+    data: [],
+    apiError: InitialError,
   };
 
   await axios
@@ -90,7 +90,7 @@ const fetchWebPages = async (): Promise<API_Result> => {
 const fetchWebPageByName = async (PageName: string): Promise<API_Result> => {
   const result: API_Result = {
     data: {},
-    apiError: InitialError
+    apiError: InitialError,
   };
 
   await axios
@@ -138,14 +138,14 @@ export const getWebpagesByNameActionCreator: ActionCreator<ThunkAction<
 >> = (PageName: string) => {
   return async (dispatch: Dispatch) => {
     const fetchingWebPageByNameAction: FetchingWebPageByNameAction = {
-      type: "FETCHING_WEBPAGES_BY_NAME"
+      type: "FETCHING_WEBPAGES_BY_NAME",
     };
     dispatch(fetchingWebPageByNameAction);
     const APIResult = await fetchWebPageByName(PageName);
     const fetchWebpageByNameAction: FetchWebPageByNameAction = {
       type: "FETCH_WEBPAGE_BY_NAME",
       webPage: APIResult.data,
-      apiError: APIResult.apiError
+      apiError: APIResult.apiError,
     };
     return dispatch(fetchWebpageByNameAction);
   };
@@ -163,13 +163,13 @@ export const updateWebpagesActionCreator: ActionCreator<ThunkAction<
 >> = (Page: HTMLPage) => {
   return async (dispatch: Dispatch) => {
     const updatingWebPageAction: UpdatingWebPagesAction = {
-      type: "UPDATING_WEBPAGES"
+      type: "UPDATING_WEBPAGES",
     };
     dispatch(updatingWebPageAction);
     const updateWebPageAction: UpdateWebPagesAction = {
       type: "UPDATE_WEBPAGES",
       // WebPage: Page //This is when the API is working
-      webPage: new HTMLPage()
+      webPage: new HTMLPage(),
     };
     return dispatch(updateWebPageAction);
   };
@@ -189,7 +189,7 @@ export const getHeaderActionCreator: ActionCreator<ThunkAction<
 >> = () => {
   return async (dispatch: Dispatch) => {
     const getHeaderAction: GetHeaderAction = {
-      type: "GET_HEADER_TITLE"
+      type: "GET_HEADER_TITLE",
     };
     return dispatch(getHeaderAction);
   };
@@ -210,8 +210,8 @@ export const updateHeaderCreator: ActionCreator<ThunkAction<
       type: "UPDATE_HEADER_TITLE",
       headerItem: {
         icon,
-        title
-      }
+        title,
+      },
     };
     return dispatch(updateHeaderAction);
   };
@@ -231,7 +231,7 @@ export const getAuthenticationActionCreator: ActionCreator<ThunkAction<
 >> = () => {
   return async (dispatch: Dispatch) => {
     const getAuthenticationAction: GetAuthenticationAction = {
-      type: "GET_AUTHENTICATION"
+      type: "GET_AUTHENTICATION",
     };
     return dispatch(getAuthenticationAction);
   };
@@ -252,8 +252,8 @@ export const updateAuthenticationCreator: ActionCreator<ThunkAction<
       type: "UPDATE_AUTHENTICATION",
       authenticationItem: {
         isAuth,
-        username
-      }
+        username,
+      },
     };
     return dispatch(updateAuthenticationAction);
   };
