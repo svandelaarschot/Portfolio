@@ -85,9 +85,6 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "F:\\ReactJS Portfolio\\API.Models\\API.Models.csproj": {
-                "projectPath": "F:\\ReactJS Portfolio\\API.Models\\API.Models.csproj"
-              },
               "F:\\ReactJS Portfolio\\API\\API.csproj": {
                 "projectPath": "F:\\ReactJS Portfolio\\API\\API.csproj"
               }
@@ -103,13 +100,17 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.7, )"
+            },
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
-              "version": "[16.4.0, )"
+              "version": "[16.7.1, )"
             },
             "NUnit3TestAdapter": {
               "target": "Package",
-              "version": "[3.15.1, )"
+              "version": "[3.17.0, )"
             },
             "nunit": {
               "target": "Package",
@@ -178,7 +179,7 @@
           "dependencies": {
             "HtmlAgilityPack": {
               "target": "Package",
-              "version": "[1.11.21, )"
+              "version": "[1.11.24, )"
             },
             "Microsoft.AspNetCore.Mvc.Formatters.Json": {
               "target": "Package",
@@ -186,23 +187,23 @@
             },
             "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
               "target": "Package",
-              "version": "[3.1.1, )"
+              "version": "[3.1.7, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.2, )"
+              "version": "[3.1.7, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.2, )"
+              "version": "[3.1.7, )"
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
-              "version": "[3.1.2, )"
+              "version": "[3.1.4, )"
             }
           },
           "imports": [
