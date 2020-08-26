@@ -14,30 +14,29 @@ namespace API.Tests
     public class HTMLWebPageTests
     {
         private MyWebApiContext _context;
-        private DbContextOptionsBuilder<MyWebApiContext> optionsBuilder;
-        private IConfiguration configuration;
+        private DbContextOptionsBuilder<MyWebApiContext> _optionsBuilder;
+        private IConfiguration _configuration;
+        
         [SetUp]
         public void SetUp()
         {
-            configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-            optionsBuilder = new DbContextOptionsBuilder<MyWebApiContext>();
-            optionsBuilder.UseNpgsql(configuration.GetConnectionString("PostGresSQL"));
-            _context = new MyWebApiContext(optionsBuilder.Options);
-
+            _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            _optionsBuilder = new DbContextOptionsBuilder<MyWebApiContext>();
+            _optionsBuilder.UseNpgsql(_configuration.GetConnectionString("PostGresSQL"));
+            _context = new MyWebApiContext(_optionsBuilder.Options);
         }
 
         [Test]
         public async Task GetHTMLPageByTitle()
         {
             // Act
-            using (var context = new MyWebApiContext(optionsBuilder.Options))
-            {
-                // Arrange
-                var result = await context.HTMLPages.FirstOrDefaultAsync(x => x.Title == "AboutMe");
+            var title = "AboutMe";
+            var result = await _context.HTMLPages.FirstOrDefaultAsync(x => x.Title == title);
 
-                // Assert
-                Assert.IsTrue(result != null);
-            }
+           // Arrange
+
+            // Assert
+            Assert.AreEqual(result.Title, title);
         }
     }
 }
